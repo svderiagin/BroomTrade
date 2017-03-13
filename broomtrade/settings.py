@@ -36,6 +36,11 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',  # обеспечивает поддержку нескольких сайтов одной копией Django, без нее не работают комменты
+    'django.contrib.comments',
+    'easy_thumbnails',
+    'taggit',
+    'precise_bbcode',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,14 +63,14 @@ WSGI_APPLICATION = 'broomtrade.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'NAME': os.path.join(BASE_DIR, 'data/site.dat'),
     }
 }
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'UTC'
 
@@ -82,3 +87,26 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR,  'static'),)
+
+MEDIA_ROOT = os.path.join(BASE_DIR,  'uploads')  # папка для хранения выгруженных файлов
+MEDIA_URL = '/media/'  # префикс интернет-адреса для выгруженных выйлов
+
+LOGIN_URL = 'login'  # имя привязки для страницы входа
+LOGOUT_URL = 'logout'  # имя привязки для страницы выхода
+
+SITE_ID = 1  # указываем, поскольку включенна поддержка нескольких сайтов одной копией Django
+
+THUMBNAIL_BASEDIR = 'thumbnails'
+THUMBNAIL_ALIASES = {
+    'goods.Good.image': {
+        'base': {'size': (200, 100)}
+    }
+}  # задаем единственный псевдоним 'base', содержащий параметры для миниатюр товаров, которые будут выводиться в списке
+
+MANAGERS = (('admin', 'admin@someserver.ru'),)  # параметры рассылки уведомлений о вновь добавленных комментариях
+EMAIL_HOST = 'someserver'
+EMAIL_HOST_USER = 'user'
+EMAIL_HOST_PASSWORD = '1234567890'
+# EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = 'mailer@someserver.ru'
