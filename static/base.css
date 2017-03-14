@@ -1,26 +1,21 @@
 @charset "utf-8";
-
 body {
     color: #000000;
     background-color: #ffffff;
     margin: 0;
     padding: 0;
 }
-
 .form-field {
     width: 100%;
     margin: 20px 0 20px 0;
 }
-
 .form-field .help {
     font-size: smaller;
     font-style: italic;
 }
-
 .form-field .label {
     margin-bottom: 2px;
 }
-
 .form-field .control input[type=name],
 .form-field .control input[type=password],
 .form-field .control input[type=number],
@@ -29,11 +24,9 @@ body {
 .form-field .control select {
     width: 100%;
 }
-
 .submit-button {
     width: 100%;
 }
-
 .error-list .error-description {
     color: #ff0000;
 }

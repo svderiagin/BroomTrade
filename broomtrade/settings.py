@@ -41,6 +41,7 @@ INSTALLED_APPS = (
     'easy_thumbnails',
     'taggit',
     'precise_bbcode',
+    'main',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -84,7 +85,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = '/static/'  # префикс, который будет добавлятся к интернет-адресу каждого статичного файла
 
 TEMPLATE_DIRS = (os.path.join(BASE_DIR,  'templates'),)
 STATICFILES_DIRS = (os.path.join(BASE_DIR,  'static'),)
@@ -110,3 +111,5 @@ EMAIL_HOST_USER = 'user'
 EMAIL_HOST_PASSWORD = '1234567890'
 # EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'mailer@someserver.ru'
+
+LOGIN_REDIRECT_URL = 'main'
