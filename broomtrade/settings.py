@@ -42,6 +42,7 @@ INSTALLED_APPS = (
     'taggit',
     'precise_bbcode',
     'main',
+    'guestbook',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -73,7 +74,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Minsk'
 
 USE_I18N = True
 
@@ -112,4 +113,4 @@ EMAIL_HOST_PASSWORD = '1234567890'
 # EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'mailer@someserver.ru'
 
-LOGIN_REDIRECT_URL = 'main'
+LOGIN_REDIRECT_URL = 'main'  # перенаправляет на главную страницу после входа

@@ -61,3 +61,48 @@
     font-size: smaller;
     font-style: italic;
 }
+.form {
+    width: 400px;
+    margin: 20px 0 20px 0;
+}
+.bottom-indent {
+    margin-bottom: 50px;
+}
+.guestbook {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #cccccc;
+}
+.guestbook .user {
+    font-weight: bold;
+}
+.guestbook .posted {
+    font-style: italic;
+    text-align: right;
+    width: 200%;
+}
+.guestbook .content {
+    padding-top: 20px;
+}
+.honeypot {
+    display: none;
+}
+#messages-list {
+    background-color: #eeeeee;
+    padding: 5px;
+}
+#messages-list .error {
+    color: #ff0000;
+}
+#pagination {
+    margin-top: 20px;
+}
+#pagination #previous_page {
+    float: left;
+}
+#pagination #num_pages {
+    text-align: center;
+}
+#pagination #next_page {
+    float: right;
+}

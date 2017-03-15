@@ -14,6 +14,7 @@ urlpatterns = patterns('',
     url(r'^logout/', 'django.contrib.auth.views.logout', name='logout'),
 
     url(r'^$', include('main.urls')),
+    url(r'^guestbook/', include('guestbook.urls')),
 
 )
 
