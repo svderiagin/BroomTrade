@@ -106,3 +106,10 @@
 #pagination #next_page {
     float: right;
 }
+.posted {
+    font-style: italic;
+    text-align: right;
+}
+.buttons {
+    text-align: right;
+}

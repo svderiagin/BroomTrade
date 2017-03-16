@@ -43,6 +43,7 @@ INSTALLED_APPS = (
     'precise_bbcode',
     'main',
     'guestbook',
+    'news',
 )
 
 MIDDLEWARE_CLASSES = (
