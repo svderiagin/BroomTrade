@@ -4,10 +4,10 @@ from django.contrib import messages
 
 from guestbook.models import Guestbook
 from guestbook.forms import GuestbookForm
-from generic.mixins import CategoryListMixing
+from generic.mixins import CategoryListMixin
 
 
-class GuestbookView(ArchiveIndexView, CategoryListMixing):
+class GuestbookView(ArchiveIndexView, CategoryListMixin):
     model = Guestbook
     date_field = 'posted'
     template_name = 'guestbook.html'

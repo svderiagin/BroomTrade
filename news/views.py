@@ -4,13 +4,13 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy  # применяем данную функцию т.к. устанавливаем значение success_url непосредственно в класе (иначе исп reverse)
 from django.contrib.messages.views import SuccessMessageMixin  # сообщение об успешном добавлении записи
 from django.contrib import messages
+
 from generic.controllers import PageNumberView
-
 from news.models import New
-from generic.mixins import CategoryListMixing, PageNumberMixin
+from generic.mixins import CategoryListMixin, PageNumberMixin
 
 
-class NewsListView(ArchiveIndexView, CategoryListMixing):
+class NewsListView(ArchiveIndexView, CategoryListMixin):
     model = New
     date_field = 'posted'
     template_name = 'news_index.html'
@@ -24,7 +24,7 @@ class NewDetailView(DetailView, PageNumberMixin):
     template_name = 'new.html'
 
 
-class NewCreate(SuccessMessageMixin, CreateView, CategoryListMixing):
+class NewCreate(SuccessMessageMixin, CreateView, CategoryListMixin):
     model = New
     template_name = 'new_add.html'
     success_url = reverse_lazy('news_index')

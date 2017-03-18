@@ -1,10 +1,10 @@
 from django.views.generic.base import TemplateView
-from generic.mixins import CategoryListMixing
 
+from generic.mixins import CategoryListMixin
 from news.models import New
 
 
-class MainPageView(TemplateView, CategoryListMixing):
+class MainPageView(TemplateView, CategoryListMixin):
     template_name = 'mainpage.html'
     news = New.objects.all()[0:5]
 
@@ -12,4 +12,3 @@ class MainPageView(TemplateView, CategoryListMixing):
         context = super(MainPageView, self).get_context_data(**kwargs)
         context['news'] = self.news
         return context
-
