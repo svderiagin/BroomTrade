@@ -17,6 +17,7 @@ urlpatterns = patterns('',
     url(r'^guestbook/', include('guestbook.urls')),
     url(r'^news/', include('news.urls')),
     url(r'^imagepool/', include('imagepool.urls')),
+    url(r'^categories/', include('categories.urls')),
 
 )
 

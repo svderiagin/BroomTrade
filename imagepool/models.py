@@ -15,3 +15,6 @@ class ImagePool(models.Model):
     def delete(self, *args, **kwargs):  # переопределяем метод delete, что бы удаленные файлы не стали "мусорными"
         self.image.delete(save=False)
         super(ImagePool, self).delete(*args, **kwargs)
+
+    def __str__(self):
+        return self.user, self.image
