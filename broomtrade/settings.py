@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'news',
     'imagepool',
     'categories',
+    'goods',
 )
 
 MIDDLEWARE_CLASSES = (

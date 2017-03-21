@@ -1,11 +1,14 @@
 from django.views.generic.base import ContextMixin
 
+from categories.models import Category
+
 
 class CategoryListMixin(ContextMixin):  # создает список категорий
 
     def get_context_data(self, **kwargs):
         context = super(CategoryListMixin, self).get_context_data(**kwargs)  # переопределяем метод для формирования первоначальных данных
         context['current_url'] = self.request.path  # формирует текущий интернет адрес
+        context['categories'] = Category.objects.all()
         return context
 
 
