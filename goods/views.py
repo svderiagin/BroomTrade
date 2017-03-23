@@ -30,40 +30,41 @@ class SortMixin(ContextMixin):
 
 
 class GoodsListView(PageNumberView, ListView, SortMixin, CategoryListMixin):
-        model = Good
-        template_name = 'goods_index.html'
-        paginate_by = 4
-        cat = None
+    model = Good
+    template_name = 'goods_index.html'
+    paginate_by = 2
+    cat = None
 
-        def get(self, request, *args, **kwargs):  # получает идентификатор категории
-            if self.kwargs['pk'] is None:
-                self.cat = Category.objects.first()
+    def get(self, request, *args, **kwargs):  # получает идентификатор категории
+        if self.kwargs['pk'] is None:
+            self.cat = Category.objects.first()
+        else:
+            self.cat = Category.objects.get(pk=self.kwargs['pk'])
+        return super(GoodsListView, self).get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super(GoodsListView, self).get_context_data(**kwargs)
+        context['category'] = self.cat
+        return context
+
+    def get_queryset(self):
+        goods = Good.objects.filter(category=self.cat)
+        if self.sort == '2':
+            if self.order == 'D':
+                goods = goods.order_by('-in_stock', 'name')
             else:
-                self.cat = Category.objects.get(pk=self.kwargs['pk'])
-            return super(GoodsListView, self).get(request, *args, **kwargs)
-
-        def get_context_data(self, **kwargs):
-            context = super(GoodsListView, self).get_context_data(**kwargs)
-            context['category'] = self.cat
-            return context
-
-        def get_queryset(self):
-            goods = Good.objects.filter(category=self.cat)
-            if self.sort == '2':
-               if self.order == 'D':
-                   goods = goods.order_by('-in_stock', 'name')
-               else:
-                   goods = goods.order_by('in_stock', 'name')
-            elif self.sort == '1':
-                if self.order == 'D':
-                    goods = goods.order_by('-price', 'name')
-                else:
-                    goods = goods.order_by('price', 'name')
+                goods = goods.order_by('in_stock', 'name')
+        elif self.sort == '1':
+            if self.order == 'D':
+                goods = goods.order_by('-price', 'name')
             else:
-                if self.order == 'D':
-                    goods = goods.order_by('-name')
-                else:
-                    goods = goods.order_by('name')
+                goods = goods.order_by('price', 'name')
+        else:
+            if self.order == 'D':
+                goods = goods.order_by('-name')
+            else:
+                goods = goods.order_by('name')
+        return goods
 
 
 class GoodDetailView(PageNumberView, DetailView, SortMixin, PageNumberMixin):
@@ -107,12 +108,12 @@ class GoodCreate(PageNumberView, TemplateView, SortMixin, PageNumberMixin):
                                 '?page=' + self.request.GET['page'] +
                                 '&sort=' + self.request.GET['sort'] +
                                 '&order=' + self.request.GET['order'])
-            if self.kwargs['pk'] is None:
-                self.cat = Category.objects.first()
-            else:
-                self.cat = Category.objects.get(pk=self.kwargs['pk'])
-                self.formset = GoodImagesFormset(request.POST, request.FILES)
-                return super(GoodCreate, self).get(request, *args, **kwargs)
+        if self.kwargs['pk'] is None:
+            self.cat = Category.objects.first()
+        else:
+            self.cat = Category.objects.get(pk=self.kwargs['pk'])
+        self.formset = GoodImagesFormset(request.POST, request.FILES)
+        return super(GoodCreate, self).get(request, *args, **kwargs)
 
 
 class GoodUpdate(PageNumberView, TemplateView, SortMixin, PageNumberMixin):
@@ -135,7 +136,7 @@ class GoodUpdate(PageNumberView, TemplateView, SortMixin, PageNumberMixin):
         return context
 
     def post(self, request, *args, **kwargs):
-        self.good = Good.objects.get(pk=self.kwargs)
+        self.good = Good.objects.get(pk=self.kwargs['pk'])
         self.form = GoodForm(request.POST, request.FILES, instance=self.good)
         self.formset = GoodImagesFormset(request.POST, request.FILES, instance=self.good)
         if self.form.is_valid():

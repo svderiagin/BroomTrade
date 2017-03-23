@@ -13,7 +13,7 @@ class Good(models.Model):
     price = models.FloatField(db_index=True, verbose_name='Цена, руб.')
     price_acc = models.FloatField(null=True, blank=True, verbose_name='Цена, с учетом скидки, руб.')
     in_stock = models.BooleanField(default=True, db_index=True, verbose_name='Есть в наличии')
-    featured = models.BooleanField(default=True, db_index=True, verbose_name='Рекомендуемый')
+    featured = models.BooleanField(default=False, db_index=True, verbose_name='Рекомендуемый')
     image = models.ImageField(upload_to='goods/list', verbose_name='Основное изображение')
 
     def save(self, *args, **kwargs):
@@ -32,6 +32,9 @@ class Good(models.Model):
     def get_absolute_url(self):
         return reverse('goods_detail', kwargs={'pk': self.pk})
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = 'товар'
         verbose_name_plural = 'товары'
@@ -45,7 +48,7 @@ class GoodImage(models.Model):
         try:
             this_record = GoodImage.objects.get(pk=self.pk)
             if this_record.image != self.image:
-                this_record.image.delete()
+                this_record.image.delete(save=False)
         except:
             pass
         super(GoodImage, self).save(*args, **kwargs)
@@ -63,3 +66,25 @@ class GoodModerator(CommentModerator):
     email_notification = True
 
 moderator.register(Good, GoodModerator)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

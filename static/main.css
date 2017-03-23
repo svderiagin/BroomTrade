@@ -98,13 +98,13 @@
 #pagination {
     margin-top: 20px;
 }
-#pagination #previous_page {
+#pagination #previous-page {
     float: left;
 }
-#pagination #num_pages {
+#pagination #num-pages {
     text-align: center;
 }
-#pagination #next_page {
+#pagination #next-page {
     float: right;
 }
 .posted {
@@ -169,9 +169,9 @@
     margin-bottom: 50px;
 }
 .good-images div {
-  max-width: 300px;
-  height: 200px;
-  float: left;
+    max-width: 300px;
+    height: 200px;
+    float: left;
 }
 .good-images div img {
     max-width: 300px;
@@ -184,7 +184,6 @@
 .comment div {
     padding: 4px;
 }
-
 .comment .user {
     background-color: #eeeeee;
     font-weight: bold;

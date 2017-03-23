@@ -1,16 +1,16 @@
 {% if paginator.num_pages > 1 %}
     <div id="pagination">
         {% if page_obj.has_previous %}
-            <div id="previous_page">
+            <div id="previous-page">
                 <a href="?page={{ page_obj.previous_page_number }}{% if sort and order %}&sort={{ sort }}&order={{ order }}{% endif %}">&lt;</a>
             </div>
         {% endif %}
         {% if page_obj.has_next %}
-            <div id="next_page">
+            <div id="next-page">
                 <a href="?page={{ page_obj.next_page_number }}{% if sort and order %}&sort={{ sort }}&order={{ order }}{% endif %}">&gt;</a>
             </div>
         {% endif %}
-        <div id="num_pages">
+        <div id="num-pages">
             {% for pn in paginator.page_range %}
                 {% if not forloop.first %}
                     &nbsp;&nbsp;|&nbsp;&nbsp;
