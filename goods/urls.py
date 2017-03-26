@@ -3,6 +3,7 @@ from django.contrib.auth.decorators import permission_required
 
 from goods.views import GoodsListView, GoodDetailView, GoodCreate, GoodUpdate, GoodDelete
 
+
 urlpatterns = patterns('',
     url(r'^(?P<pk>\d+)/$', GoodsListView.as_view(), name='goods_index'),
     url(r'^(?P<pk>\d+)/detail/$', GoodDetailView.as_view(), name='goods_detail'),
