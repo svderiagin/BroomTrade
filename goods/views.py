@@ -2,12 +2,14 @@ from django.views.generic.base import ContextMixin
 from django.views.generic.list import ListView  # формирование списка записей и пагинация
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import DeleteView
-
 from django.views.generic.base import TemplateView
 from django.forms.models import inlineformset_factory
 from django.contrib import messages
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse
+from django.contrib.syndication.views import Feed
+from django.utils.feedgenerator import Atom1Feed
+from django.core.exceptions import ObjectDoesNotExist
 
 from generic.mixins import CategoryListMixin
 from goods.models import Good
@@ -16,6 +18,7 @@ from generic.controllers import PageNumberView
 from generic.mixins import PageNumberMixin
 from goods.models import GoodImage
 from goods.forms import GoodForm
+
 
 
 class SortMixin(ContextMixin):
@@ -70,6 +73,7 @@ class GoodsListView(PageNumberView, ListView, SortMixin, CategoryListMixin):
 class GoodDetailView(PageNumberView, DetailView, SortMixin, PageNumberMixin):
     model = Good
     template_name = 'good.html'
+
 
 
 GoodImagesFormset = inlineformset_factory(Good, GoodImage, can_order=True)
@@ -163,3 +167,44 @@ class GoodDelete(PageNumberView, DeleteView, SortMixin, PageNumberMixin):
         messages.add_message(request, messages.SUCCESS, 'Товар успешно удален')
         return super(GoodDelete, self).post(request, *args, **kwargs)
 
+
+
+class RssGoodsListFeed(Feed):
+
+    def get_object (self, request, *args, **kwargs):
+        try:
+            return Category.objects.get(pk = kwargs['pk'])
+        except Category.DoesNotExist:
+            raise ObjectDoesNotExist('Нет такой категории!')
+
+    def title(self, obj):
+        return 'Товары, относящиеся к категории "' + obj.name + '" :: Веник-Торг'
+
+    def description(self, obj):
+        return self.title(obj)
+
+    def link(self, obj):
+        return reverse('goods_index', kwargs={'pk': obj.pk})
+
+    def categories(self, obj):
+        return [obj.name]
+
+    def items(self, obj):
+        return Good.objects.filter(category=obj).order_by('name')
+
+    def item_title(self, item):
+        return item.name
+
+    def item_description(self, item):
+        return item.description
+
+    def item_categories(self, item):
+        return [item.category.name]
+
+    def item_link(self, item):
+        return reverse('goods_detail', kwargs={'pk': item.pk})
+
+
+class AtomGoodsListFeed(RssGoodsListFeed):
+  feed_type = Atom1Feed
+  subtitle = RssGoodsListFeed.description

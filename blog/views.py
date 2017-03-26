@@ -40,7 +40,7 @@ class BlogListView(PageNumberView, ArchiveIndexView, SearchMixin, CategoryListMi
     def get_queryset(self):  # выполняем фильтрацию в зависимости от того, какие значения присутствуют в search или tag
         blog = super(BlogListView, self).get_queryset()  # получаем набор записей уже отсортированных по полю posted
         if self.search:
-            blog = blog.filter(Q(title_contains=self.search) | Q(description__contain=self.search) | Q(content__contains=self.search))
+            blog = blog.filter(Q(title__contains=self.search) | Q(description__contains=self.search) | Q(content__contains=self.search))
         if self.tag:
             blog = blog.filter(tags__name=self.tag)
         return blog
@@ -52,8 +52,7 @@ class BlogDetailView(PageNumberView, DetailView, SearchMixin, PageNumberMixin):
 
 
 
-
-class BlogCreate(SuccessMessageMixin, CreateView,CategoryListMixin):
+class BlogCreate(SuccessMessageMixin, CreateView, CategoryListMixin):
     model = Blog
     template_name = 'blog_add.html'
     success_url = reverse_lazy('blog_index')
@@ -139,9 +138,3 @@ class BlogDelete(PageNumberView, TemplateView, SearchMixin, PageNumberMixin):
             return redirect(redirect_url)
         else:
             return redirect(reverse('login'))
-
-
-
-
-
-

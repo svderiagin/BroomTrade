@@ -2,8 +2,8 @@ from django.views.generic.base import View
 
 
 class PageNumberView(View):
-    def get(self, request, *args, **kwargs):
 
+    def get(self, request, *args, **kwargs):
         try:
             self.sort = self.request.GET['sort']
         except KeyError:

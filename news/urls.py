@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from django.contrib.auth.decorators import permission_required
+
 from news.views import NewsListView, NewDetailView, NewCreate, NewUpdate, NewDelete
+from news.views import RssNewsListFeed, AtomNewsListFeed
 
 
 urlpatterns = patterns('',
@@ -9,4 +11,6 @@ urlpatterns = patterns('',
     url(r'^add/$', permission_required('news.add_new')(NewCreate.as_view()), name='news_add'),
     url(r'^(?P<pk>\d+)/edit/$', permission_required('news.change_new')(NewUpdate.as_view()), name='news_edit'),
     url(r'^(?P<pk>\d+)/delete/$', permission_required('news.delete_new')(NewDelete.as_view()), name='news_delete'),
+    url(r'^feed/rss/$', RssNewsListFeed(), name='news_feed_rss'),
+    url(r'^feed/atom/$', AtomNewsListFeed(), name='news_feed_atom'),
 )
